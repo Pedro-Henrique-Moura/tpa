@@ -8,7 +8,7 @@ import java.util.List;
 import application.Program;
 import entites.ListaTel;
 
-public class Program {
+public class Program { 
 
 	public static void main(String[] args) {
 
@@ -32,7 +32,7 @@ public class Program {
 				list.add(lista); //Insere as informações na lista
 				
 				line = br.readLine(); // Le a proxima linha
-			}	
+			}	//Comentário
 			
 			System.out.println("Lista Telelefonica:"); // Print da lista
 			for (ListaTel l : list) { //For para percorrer a lista
