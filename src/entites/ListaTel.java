@@ -20,7 +20,18 @@ public class ListaTel { //Classe que contém as variáveis da lista telefonica -
         this.cidade = cidade;
         this.pais = pais;
     }
+
+    private ListaTel proximo; //atributo responsável por setar o próximo elemento (pessoa) na lista encadeada. 
+
     //Gets e sets
+    public ListaTel getProximo(){
+        return proximo;
+    }
+
+    public void setProximo(ListaTel proximo){
+        this.proximo = proximo;
+    }
+
     public String getNome(){
         return nome;
     }
@@ -50,11 +61,6 @@ public class ListaTel { //Classe que contém as variáveis da lista telefonica -
 
     public void setPais(String pais){
         this.pais = pais;
-    }
-
-    @Override 
-    public String toString(){
-        return "Lista Tel: [nome = " + nome + ",telefone = " + telefone + ",cidade = " + cidade + ",pais = " + pais;
     }
 }
 

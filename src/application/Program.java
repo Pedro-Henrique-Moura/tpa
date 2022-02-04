@@ -2,110 +2,80 @@ package application;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import javax.swing.JOptionPane;
 import application.Program;
-import entites.ListaTel;
-import entites.MergeSort;
+import entites.Vetor;
+
 
 public class Program { 
 
 	public static void main(String[] args) {
 
-		String path = "C:\\Users\\PC\\Desktop\\Trab1\\teste.txt"; //Caminho de leitura do arquivo agenda1.csv
+
+		System.out.println("------ Opções do menu ------ \n 1 - Abrir/carregar arquivo \n 2 - Pesquisar contato(informe o nome completo) \n 3 - Atualizar contato (informe o nome completo) \n 4 - Excluir contato (informe nome completo) \n 5 - Pesquisar contato excluido \n 0 - Sair");
+		int opcao = Integer.parseInt(JOptionPane.showInputDialog("Digite uma opção válida: "));
+		Vetor lista_contato = new Vetor();
+		lista_contato.inicializaListas();
 		
-		List<ListaTel> list = new ArrayList<ListaTel>(); //Cria uma lista para receber os endereços do arquivo
-		
-		
-		try (BufferedReader br = new BufferedReader(new FileReader(path))) { //Pede para abrir o arquivo
-			
-			String line = br.readLine();  //Lê as linhas do arquivo
-			line = br.readLine(); //Tenta ler a segunda linha, Todo o conteudo da linha está na variavel Line
-			while (line != null) { //Enquanto as linhas não forem vazias, continua  a leitura
+		while (opcao != 0){
+			if(opcao == 1){			
 				
-				String[] vect = line.split(","); // Faz o split toda vez que encontrar uma linha e transporta para um vetor
-				String nome = vect[0]; //Recebe o nome da pessoa
-				String telefone = vect[1]; //Recebe o telefone
-				String cidade = vect[2]; //Recebe cidade
-				String pais = vect[3];// Recebe pais
+				//Vetor lista_contatoAux = new Vetor();
+				//lista_contatoAux.inicializaListas();
 				
-				ListaTel lista = new ListaTel(nome,telefone,cidade,pais); //Instancia uma lista a partir da classe ListaTel 
-				list.add(lista); //Insere as informações na lista
-				
-				line = br.readLine(); // Le a proxima linha
-			}	
-			
-			System.out.println("Lista Telefonica:"); // Print da lista
-			for (ListaTel l : list) { //For para percorrer a lista
-				System.out.println(l);
+				String path = "D:\\Faculdade  - trabalho\\TPA\\entrada1.csv"; //Caminho de leitura do arquivo agenda1.csv  D:\\Faculdade  - trabalho\\TPA\\				
+				System.out.println("\nCarga do arquivo...\n");
+				try (BufferedReader br = new BufferedReader(new FileReader(path))) { //Pede para abrir o arquivo
+					
+					String line = br.readLine();  //Lê as linhas do arquivo
+					while (line != null) { //Enquanto as linhas não forem vazias, continua  a leitura
+						System.out.println("\nLendo arquivo...\n");
+						String[] vect = line.split(","); // Faz o split toda vez que encontrar uma linha e transporta para um vetor
+						String nome = vect[0]; //Recebe o nome da pessoa
+						String telefone = vect[1]; //Recebe o telefone
+						String cidade = vect[2]; //Recebe cidade
+						String pais = vect[3];// Recebe pais
+						//lista_contato.funcaohash(nome);
+						lista_contato.addTabela(nome, telefone, cidade, pais); //chama método responsável por adicionar contato na lista encadeada		
+						//lista_contatoAux.addTabela(nome, telefone, cidade, pais); //chama método responsável por adicionar contato na lista encadeada										
+						line = br.readLine(); // Le a proxima linha
+					}
+					//lista_contato = lista_contatoAux;		
+				} catch (IOException e) {
+					System.out.println("Error: " + e.getMessage());
+				}
+			}
+			if (opcao == 2){
+				String nome_contato = JOptionPane.showInputDialog("Digite o nome completo de um dos contatos a ser buscado: ");
+				lista_contato.buscaPalavra(nome_contato);
 			}
 
-			//Lista ordenada
-			System.out.println("Lista Ordenada");
-
-			//Compara a lista baseado no comparatorNomeCrescente
-			Collections.sort(list, new MergeSort());
-			for(ListaTel cliente : list){
-				System.out.println(cliente.toString());
+			if (opcao == 3) {
+				String nome_contato = JOptionPane.showInputDialog("Digite o nome completo de um dos contatos a ser atualizado: ");
+				String telefone = JOptionPane.showInputDialog("Digite o telefone a ser atualizado: ");
+				String cidade = JOptionPane.showInputDialog("Digite a cidade a ser atualizado: ");
+				String pais = JOptionPane.showInputDialog("Digite o pais a ser atualizado: ");
+				lista_contato.atualizarPalavra(nome_contato, telefone, cidade, pais);
 			}
-			
-		}
 
-		catch (IOException e) {
-			System.out.println("Error: " + e.getMessage());
-		}
-		
-		
-		//Abertura do segundo arquivo
-
-		String path2 = "C:\\Users\\PC\\Desktop\\Trab1\\teste2.txt"; //Caminho de leitura do arquivo agenda1.csv
-		List<ListaTel> list2 = new ArrayList<ListaTel>(); //Cria uma lista para receber os endereços do arquivo2
-
-		try (BufferedReader br = new BufferedReader(new FileReader(path2))) { //Pede para abrir o arquivo
-			
-			String line = br.readLine();  //Lê as linhas do arquivo
-			line = br.readLine(); //Tenta ler a segunda linha, Todo o conteudo da linha está na variavel Line
-			while (line != null) { //Enquanto as linhas não forem vazias, continua  a leitura
-				
-				String[] vect2 = line.split(","); // Faz o split toda vez que encontrar uma linha e transporta para um vetor
-				String nome = vect2[0]; //Recebe o nome da pessoa
-				String telefone = vect2[1]; //Recebe o telefone
-				String cidade = vect2[2]; //Recebe cidade
-				String pais = vect2[3];// Recebe pais
-				
-				ListaTel lista2 = new ListaTel(nome,telefone,cidade,pais); //Instancia uma lista a partir da classe ListaTel 
-				list2.add(lista2); //Insere as informações na lista
-				
-				line = br.readLine(); // Le a proxima linha
-			}	
-
-			System.out.println("Lista Telefonica2:"); // Print da lista
-			for (ListaTel l2 : list2) { //For para percorrer a lista
-				System.out.println(l2);
+			if (opcao == 4) {
+				String nome_contato = JOptionPane.showInputDialog("Digite o nome completo de um dos contatos a ser excluido: ");
+				lista_contato.excluirItem(nome_contato);
 			}
-			
-			//Lista ordenada
-			System.out.println("Lista Ordenada2");
 
-			//Compara a lista baseado no comparatorNomeCrescente
-			Collections.sort(list2, new MergeSort());
-			for(ListaTel cliente : list2){
-				System.out.println(cliente.toString());
+			if (opcao == 5) {
+				String nome_contato = JOptionPane.showInputDialog("Digite o nome completo do contato excluido: ");
+				lista_contato.buscaPalavra(nome_contato);
 			}
-			
+
+			if (opcao == 6){
+				lista_contato.encontrarColisoes();
+			}
+
+			System.out.println("------ Opções do menu ------ \n 1 - Abrir/carregar arquivo \n 2 - Pesquisar contato(informe o nome completo) \n 3 - Atualizar contato (informe o nome completo) \n 4 - Excluir contato (informe nome completo) \n 5 - Pesquisar contato excluido \n 6 - Verificar número de colisões \n 0 - Sair\n");
+			opcao = Integer.parseInt(JOptionPane.showInputDialog("Digite uma opção válida: "));
+
 		}
-		catch (IOException e) {
-			System.out.println("Error: " + e.getMessage());
-		}
-
-
-		
-
-
-		
-			
-		
 
 	}
 }
