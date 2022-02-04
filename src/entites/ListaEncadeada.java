@@ -44,8 +44,7 @@ public class ListaEncadeada {
             System.out.println("cidade: " + percorre.getCidade() + "\n");
             System.out.println("pais: " + percorre.getPais() + "\n");
             System.out.println("----------------------------\n");
-            percorre = percorre.getProximo();
-            
+            percorre = percorre.getProximo();            
         }
     }
 

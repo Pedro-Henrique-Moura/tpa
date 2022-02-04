@@ -8,9 +8,7 @@ import entites.Vetor;
 
 
 public class Program { 
-
 	public static void main(String[] args) {
-
 
 		System.out.println("------ Opções do menu ------ \n 1 - Abrir/carregar arquivo \n 2 - Pesquisar contato(informe o nome completo) \n 3 - Atualizar contato (informe o nome completo) \n 4 - Excluir contato (informe nome completo) \n 5 - Pesquisar contato excluido \n 0 - Sair");
 		int opcao = Integer.parseInt(JOptionPane.showInputDialog("Digite uma opção válida: "));

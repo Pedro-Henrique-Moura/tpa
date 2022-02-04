@@ -4,11 +4,11 @@ public class Vetor {
     ListaEncadeada vetor[];
 
     public Vetor() {
-        vetor = new ListaEncadeada[307];
+        vetor = new ListaEncadeada[3946];
     }
 
     public void inicializaListas() {
-        for (int i = 0; i<87999; i++) {
+        for (int i = 0; i<3946; i++) {
             vetor[i] = new ListaEncadeada();
             System.out.println("***Iinicializando lista encadeada na posição: "+ i +"\n");
         }
@@ -54,10 +54,10 @@ public class Vetor {
             }
         } else {
             posicao = ((posicao - 97) + palavra.length()) * palavra.length();
-            if (posicao < 151) {
+            if (posicao < 127) {
                 posicao = posicao * palavra.length();
                 if (posicao >= tamanho) {
-                    posicao = posicao - 211;
+                    posicao = posicao - 109;
                 }
             }
         }
@@ -67,7 +67,7 @@ public class Vetor {
     public int funcaohash(String palavra) {
         int hash = 7;
         for (int i = 0; i < palavra.length(); i++) {
-            hash = hash*31 + palavra.charAt(0);
+            hash = hash*31 + palavra.charAt(i);
         }
         System.out.println("***Hash secundario***:\n" + hash);
         return hash;
@@ -86,13 +86,13 @@ public class Vetor {
 
     public void addTabela(String nome, String telefone, String cidade, String pais) {
         //int posicao = funcaoHash(nome,87999);
-        int posicao = funcaoHashSecond(nome,307);
+        int posicao = funcaoHashSecond(nome,3946);
         vetor[posicao].add_contato(nome, telefone, cidade, pais);
     }
 
     public void excluirItem(String nome) {
         //int posicao = funcaoHash(nome,87999);
-        int posicao = funcaoHashSecond(nome,307);
+        int posicao = funcaoHashSecond(nome,3946);
         int num_elementos_antigo = vetor[posicao].tamanho_lista;
         System.out.println("\n***Itens nesse indice:***\n");
         vetor[posicao].imprimeLista();
@@ -106,20 +106,20 @@ public class Vetor {
 
     public void buscaPalavra(String nome) {
         //int posicao = funcaoHash(nome,87999);
-        int posicao = funcaoHashSecond(nome,307);
+        int posicao = funcaoHashSecond(nome,3946);
         vetor[posicao].buscaItem(nome);
     }
 
     public void atualizarPalavra(String nome, String telefone, String cidade, String pais) {
         //int posicao = funcaoHash(nome,87999);
-        int posicao = funcaoHashSecond(nome,307);
+        int posicao = funcaoHashSecond(nome,3946);
         vetor[posicao].atualizarItem(nome, telefone, cidade, pais);
     }
 
     public void encontrarColisoes(){
         int colisao = 0;
         int maior = 0;
-        for (int i = 0; i<307; i++) {
+        for (int i = 0; i<3946; i++) {
             if (vetor[i].tamanho_lista > 1) {
                 System.out.println("\n***Itens no indice "+ i +": \n"+vetor[i].tamanho_lista);
                 colisao+=1;
