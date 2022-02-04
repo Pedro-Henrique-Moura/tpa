@@ -30,7 +30,6 @@ public class ListaEncadeada {
             novo_contato.setCidade(cidade);
             novo_contato.setPais(pais);
             novo_contato.setProximo(null);
-            novo_contato.setProximo(null);
             Ultimo.setProximo(novo_contato);
             Ultimo = novo_contato;
             tamanho_lista++;
