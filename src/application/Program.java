@@ -24,7 +24,7 @@ public class Program {
 			System.out.println("\nTamanho da tabela hash atualziado:" + tamanho + "\n");
 		}
 
-		Vetor lista_contato = new Vetor(tamanho);
+		Vetor lista_contato = new Vetor(tamanho); //realizo a construção da tabela hash, instanciando um vetor do tipo Lista Encadeada
 		lista_contato.inicializaListas(tamanho);
 		
 		if(opcao == 1){			
@@ -55,12 +55,12 @@ public class Program {
 
 		while (opcao != 0){
 			
-			if (opcao == 2){
+			if (opcao == 2){   //busco um item (contato)
 				String nome_contato = JOptionPane.showInputDialog("Digite o nome completo de um dos contatos a ser buscado: ");
 				lista_contato.buscaPalavra(nome_contato, tamanho);
 			}
 
-			if (opcao == 3) {
+			if (opcao == 3) { //realiza atualização de um item (contato)
 				String nome_contato = JOptionPane.showInputDialog("Digite o nome completo de um dos contatos a ser atualizado: ");
 				String telefone = JOptionPane.showInputDialog("Digite o telefone a ser atualizado: ");
 				String cidade = JOptionPane.showInputDialog("Digite a cidade a ser atualizado: ");
@@ -68,17 +68,17 @@ public class Program {
 				lista_contato.atualizarPalavra(nome_contato, telefone, cidade, pais, tamanho);
 			}
 
-			if (opcao == 4) {
+			if (opcao == 4) { //realiza a remoção de um item (contato)
 				String nome_contato = JOptionPane.showInputDialog("Digite o nome completo de um dos contatos a ser excluido: ");
 				lista_contato.excluirItem(nome_contato, tamanho);
 			}
 
-			if (opcao == 5) {
+			if (opcao == 5) { //verifica se o contato excluido ainda existe
 				String nome_contato = JOptionPane.showInputDialog("Digite o nome completo do contato excluido: ");
 				lista_contato.buscaPalavra(nome_contato, tamanho);
 			}
 
-			if (opcao == 6){
+			if (opcao == 6){ //verifica quantas colisões ocorreram e qual é o maior número de colisões em um único indice
 				lista_contato.encontrarColisoes(tamanho);
 			}
 
