@@ -10,7 +10,8 @@ public class ListaEncadeada {
         Ultimo = Primeiro;
     }
 
-    public void add_contato(String nome, String telefone, String cidade, String pais) {
+    public void addItem(String nome, String telefone, String cidade, String pais) {
+        
         if (Primeiro == null) {
             Primeiro = new ListaTel();
             Ultimo = Primeiro;
@@ -38,12 +39,13 @@ public class ListaEncadeada {
 
     public void imprimeLista(){
         ListaTel percorre = Primeiro.getProximo();
+
         while (percorre != null) {
             System.out.println("nome: " + percorre.getNome() +"\n");
             System.out.println("telefone: " + percorre.getTelefone() + "\n");
             System.out.println("cidade: " + percorre.getCidade() + "\n");
             System.out.println("pais: " + percorre.getPais() + "\n");
-            System.out.println("----------------------------\n");
+            System.out.println("\n----------------------------\n");
             percorre = percorre.getProximo();            
         }
     }
@@ -81,6 +83,7 @@ public class ListaEncadeada {
     public void buscaItem(String nome) {
         ListaTel percorre = Primeiro.getProximo();
         boolean find = false;
+
         while (percorre != null && find != true) {
             if(percorre.getNome().equals(nome)){
                 System.out.println("nome: " + percorre.getNome() +"\n");
@@ -101,10 +104,11 @@ public class ListaEncadeada {
         ListaTel auxiliar = Primeiro;
         Primeiro = Primeiro.getProximo();
         boolean find = false;
+
         while (Primeiro != null) {
             if(Primeiro.getNome().equals(nome)){
-                System.out.println("dados antes de serem atualizados \n");
-                System.out.println("nome: " + Primeiro.getNome());
+                System.out.println("***Dados antes de serem atualizados***\n");
+                System.out.println("nome: " + Primeiro.getNome() + "\n");
                 System.out.println("telefone: " + Primeiro.getTelefone() + "\n");
                 System.out.println("cidade: " + Primeiro.getCidade() + "\n");
                 System.out.println("pais: " + Primeiro.getPais() + "\n");
@@ -112,8 +116,8 @@ public class ListaEncadeada {
                 Primeiro.setTelefone(telefone);
                 Primeiro.setCidade(cidade);
                 Primeiro.setPais(pais);        
-                System.out.println("dados após serem atualizados \n");
-                System.out.println("nome: " + Primeiro.getNome());        
+                System.out.println("***Dados após serem atualizados***\n");
+                System.out.println("nome: " + Primeiro.getNome() + "\n");        
                 System.out.println("telefone novo: " + Primeiro.getTelefone() + "\n");
                 System.out.println("cidade nova: " + Primeiro.getCidade() + "\n");
                 System.out.println("pais novo: " + Primeiro.getPais() + "\n");

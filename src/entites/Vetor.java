@@ -3,99 +3,42 @@ package entites;
 public class Vetor {
     ListaEncadeada vetor[];
 
-    public Vetor() {
-        vetor = new ListaEncadeada[3946];
+    public Vetor(int tamanho) {           //instanciação de um vetor do tipo ListaEncadeada, como parametro é repassado o tamanho do vetor                
+        vetor = new ListaEncadeada[tamanho];
     }
 
-    public void inicializaListas() {
-        for (int i = 0; i<3946; i++) {
+    public void inicializaListas(int tamanho) {    //inicializa cada posição do vetor, instanciando cada indice de acordo com o tamanho da tabela hash (tamanho do vetor)
+        for (int i = 0; i<tamanho; i++) {
             vetor[i] = new ListaEncadeada();
             System.out.println("***Iinicializando lista encadeada na posição: "+ i +"\n");
         }
     }
 
-
-    public int funcaoHash(String palavra, int tamanho) {
-        palavra = palavra.toLowerCase();
-        int posicao = palavra.charAt(0);
-
-        int hash = 7;
-        for (int i = 0; i < palavra.length(); i++) {
-            hash = hash + palavra.charAt(i);
-        }
-        posicao = posicao + hash;
-
-        if(palavra.length() >= 6){            
-            posicao = (posicao - 97) * (palavra.length() + palavra.length());
-            if (posicao >= tamanho){
-                posicao = posicao - tamanho;
-            }
-        } else {
-            posicao = ((posicao - 97) + palavra.length()) * palavra.length();
-            if (posicao < 10000) {
-                posicao = posicao * palavra.length();
-                if (posicao >= tamanho) {
-                    posicao = posicao - 201;
-                }
-            }
-        }
-        //funcaohash(palavra);
-        return posicao;
-    }
-
-    public int funcaoHashSecond(String palavra, int tamanho) {
-        palavra = palavra.toLowerCase();
-        int posicao = palavra.charAt(0);   
-
-        if(palavra.length() >= 6){            
-            posicao = (posicao - 97) * (palavra.length() + palavra.length());
-            if (posicao >= tamanho){
-                posicao = posicao - tamanho;
-            }
-        } else {
-            posicao = ((posicao - 97) + palavra.length()) * palavra.length();
-            if (posicao < 127) {
-                posicao = posicao * palavra.length();
-                if (posicao >= tamanho) {
-                    posicao = posicao - 109;
-                }
-            }
-        }
-        return posicao;
-    }
   
-    public int funcaohash(String palavra) {
+    public int funcaohash(String palavra, int tamanho) {   //função responsável por retornar uma posição na tabela hash, dado que eu passo como parametro uma chave
+        palavra.toLowerCase();
         int hash = 7;
         for (int i = 0; i < palavra.length(); i++) {
             hash = hash*31 + palavra.charAt(i);
         }
-        System.out.println("***Hash secundario***:\n" + hash);
-        return hash;
-    }
-
-    public int funcaohash_main(String palavra) {
-        int hash = 1;
-        for (int i = 0; i < palavra.length(); i++) {
-            hash = hash + 3;
+        if (hash < 0){
+            hash*=-1;
         }
-        hash= palavra.length();
-        System.out.println("***Hash secundario***:\n" + hash);
-        return hash;
+        System.out.println("\n***Posicao na Tabela Hash: " + hash%tamanho +"\n");
+        return hash%tamanho;
     }
-    
+ 
 
-    public void addTabela(String nome, String telefone, String cidade, String pais) {
-        //int posicao = funcaoHash(nome,87999);
-        int posicao = funcaoHashSecond(nome,3946);
-        vetor[posicao].add_contato(nome, telefone, cidade, pais);
+    public void addTabela(String nome, String telefone, String cidade, String pais, int tamanho) { //função que é chamada para adicionar um novo item na Lista Encadeada que estará presente em uma das posições do Vetor 
+        int posicao = funcaohash(nome, tamanho);
+        vetor[posicao].addItem(nome, telefone, cidade, pais);
     }
 
-    public void excluirItem(String nome) {
-        //int posicao = funcaoHash(nome,87999);
-        int posicao = funcaoHashSecond(nome,3946);
+    public void excluirItem(String nome, int tamanho) {  //removo um item que está inserido na tabela hash, chamando a função removeItem da Lista Encadeada
+        int posicao = funcaohash(nome, tamanho);
         int num_elementos_antigo = vetor[posicao].tamanho_lista;
         System.out.println("\n***Itens nesse indice:***\n");
-        vetor[posicao].imprimeLista();
+        vetor[posicao].imprimeLista();   //função que imprime por completo todos itens (contatos) que estão em uma determinada posição no Vetor de Listas Encadeadas
         vetor[posicao].removeItem(nome);
         
         System.out.println("***Itens nesse indice após excluir:***\n");
@@ -104,33 +47,32 @@ public class Vetor {
         System.out.println("\n***N° elementos no vetor após exclusão:" + vetor[posicao].tamanho_lista +"\n");
     }
 
-    public void buscaPalavra(String nome) {
-        //int posicao = funcaoHash(nome,87999);
-        int posicao = funcaoHashSecond(nome,3946);
+    public void buscaPalavra(String nome, int tamanho) { //função responsável por encontrar na tabela hash (vetor de listas encadeadas) um item, dado que eu passo sua chave como parametro (nome)
+        int posicao = funcaohash(nome, tamanho);
         vetor[posicao].buscaItem(nome);
     }
 
-    public void atualizarPalavra(String nome, String telefone, String cidade, String pais) {
-        //int posicao = funcaoHash(nome,87999);
-        int posicao = funcaoHashSecond(nome,3946);
+    public void atualizarPalavra(String nome, String telefone, String cidade, String pais, int tamanho) { //função responsável por atualizar um item presente na tabela hash, recebo como parametro as informações novas
+        int posicao = funcaohash(nome, tamanho);
         vetor[posicao].atualizarItem(nome, telefone, cidade, pais);
     }
 
-    public void encontrarColisoes(){
+    public void encontrarColisoes(int tamanho){ //função criada para verificar quantas colisões ocorreram na tabela hash, ao final retorno também o maior número de colisões encontrados em um único indice no Vetor de Listas Encadeadas 
         int colisao = 0;
         int maior = 0;
-        for (int i = 0; i<3946; i++) {
+
+        for (int i = 0; i<tamanho; i++) {
             if (vetor[i].tamanho_lista > 1) {
                 System.out.println("\n***Itens no indice "+ i +": \n"+vetor[i].tamanho_lista);
-                colisao+=1;
+                colisao+=vetor[i].tamanho_lista;
                 if (vetor[i].tamanho_lista >= maior){
                     maior = vetor[i].tamanho_lista;
                 }
             }
         }
 
-        System.out.println("\nNúmero de colisões: " + colisao + "\n");
-        System.out.println("\nMaior número de colisões encontrado: " + maior + "\n");
+        System.out.println("\nNúmero de colisões: " + colisao + "\n"); //número de colisões no geral
+        System.out.println("\nMaior número de colisões encontrado em um único indice: " + maior + "\n"); //informa o maior número de colisões encontrados em um único indice
 
     }
     

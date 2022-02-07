@@ -21,7 +21,7 @@ public class ListaTel { //Classe que contém as variáveis da lista telefonica -
         this.pais = pais;
     }
 
-    private ListaTel proximo; //atributo responsável por setar o próximo elemento (pessoa) na lista encadeada. 
+    private ListaTel proximo; //atributo responsável por setar o próximo elemento (pessoa/contato) na lista encadeada. 
 
     //Gets e sets
     public ListaTel getProximo(){
