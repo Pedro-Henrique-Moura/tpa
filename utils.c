@@ -1,0 +1,179 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+//Insere os elementos menores a esquerda e maiores a direita,
+
+int get_pos_pivo(int vetor[], int inicio, int fim)
+{
+    int pivo, index, desloca, aux;
+    pivo = vetor[fim];
+    index = inicio;
+    desloca = inicio;
+    
+    for(desloca = inicio; desloca < fim; desloca++)
+    {
+        if(vetor[desloca] <= pivo)
+        {
+            aux = vetor[desloca];
+            vetor[desloca] = vetor[index];
+            vetor[index] = aux;
+            index++;
+        }
+    }
+
+    //inserir o pivo na posicao correta
+    aux = vetor[index];
+    vetor[index] = vetor[fim];
+    vetor[fim] = aux;
+
+    //Retorna a posicao do pivo para o quick_sort
+    return index;
+}
+
+//Implementando o quicksort
+void quick_sort(int vetor[], int inicio, int fim)
+{
+    int posPivo;
+    //Condicao de parada do algoritmo
+    if(inicio < fim)
+    {
+        //Calcular a posicao do pivo
+        posPivo = get_pos_pivo(vetor, inicio, fim);
+        //Sublista a esquerda
+        quick_sort(vetor, inicio, posPivo-1);
+
+        //Sublista a direita
+        quick_sort(vetor, posPivo+1, fim);
+    }
+}
+
+//Pega a posição do pivo
+int get_pos_pivo_string(char **matriz, int inicio, int fim)
+{
+    int index, desloca;
+    char pivo[200], aux[200];
+    strcpy(pivo, matriz[fim]);
+
+    index = inicio;
+    desloca = inicio;
+    
+    for(desloca = inicio; desloca < fim; desloca++)
+    {
+        //Se menor ou igual
+        if((strcmp(matriz[desloca], pivo) <= 0))
+        {
+            strcpy(aux, matriz[desloca]);
+            strcpy(matriz[desloca], matriz[index]);
+            strcpy(matriz[index], aux);
+            index++;
+        }
+    }
+
+    //inserir o pivo na posicao correta
+    strcpy(aux, matriz[index]);
+    strcpy(matriz[index], matriz[fim]);
+    strcpy(matriz[fim], aux);
+
+    //Retorna a posicao do pivo para o quick_sort
+    return index;
+}
+
+void quick_sort_string(char **matriz, int inicio, int fim)
+{
+    int posPivo;
+    //Condicao de parada do algoritmo
+    if(inicio < fim)
+    {
+        //Calcular a posicao do pivo
+        posPivo = get_pos_pivo_string(matriz, inicio, fim);
+        //Sublista a esquerda
+        quick_sort_string(matriz, inicio, posPivo-1);
+
+        //Sublista a direita
+        quick_sort_string(matriz, posPivo+1, fim);
+    }
+}
+
+//Printa os valores de um vetor dado o endereco e o tamanho do mesmo
+void print_vetor(int vetor[], int tam)
+{
+    for(int i = 0; i < tam; i++)
+    {
+        printf("%d, ", vetor[i]);
+    }
+    printf("\n");
+}
+
+//Realiza a busca de um elemento do vetor usando busca binária
+
+int busca_binaria(int alvo, int vetor[], int tam)
+{
+    int lim_inf = 0, lim_sup = tam-1, meio;
+    while(lim_inf <= lim_sup)
+    {
+        meio = (lim_inf + lim_sup) / 2;
+        if(alvo == vetor[meio])
+        {
+            return 1;
+        }
+        else if(alvo < vetor[meio])
+        {
+            lim_sup = meio - 1;
+        }
+        else
+        {
+            lim_inf = meio + 1;
+        }
+    }
+    return 0;
+}
+
+int busca_binaria_string(char alvo[], char matriz[][200], int tam)
+{
+    int lim_inf = 0, lim_sup = tam-1, meio;
+    while(lim_inf <= lim_sup)
+    {
+        meio = (lim_inf + lim_sup) / 2;
+        if(strcmp(alvo, matriz[meio]) == 0)
+        {
+            return 1;
+        }
+        //Alvo menor
+        else if(strcmp(alvo, matriz[meio]) < 0)
+        {
+            lim_sup = meio - 1;
+        }
+        //Alvo Maior
+        else
+        {
+            lim_inf = meio + 1;
+        }
+    }
+    return 0;
+}
+
+
+int file_to_vetor(char *nome_arquivo, int **vetor)
+{
+    int tam;
+    FILE *arquivo = fopen(nome_arquivo, "r");
+    if(!arquivo) 
+    {
+        printf("Nao foi possivel abrir o arquivo %s\n", nome_arquivo);
+        return 0;
+    }
+    else
+    {
+        //Primeira linha do arquivo == tamanho do vetor
+        int lixo_mem = fscanf(arquivo, "%d", &tam);
+        lixo_mem ++;
+        lixo_mem = 0;
+        *vetor = (int*) malloc(tam * sizeof(int));
+        int i = 0;
+        //As linhas posteriores do arquivos sao os valores do vetor
+        while((fscanf(arquivo, "%d", &(*vetor)[i]) != EOF)) i++;
+        fclose(arquivo);
+    }
+    return tam;
+}
