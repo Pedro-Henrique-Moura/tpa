@@ -43,8 +43,8 @@ public class Vetor {
         
         System.out.println("***Itens nesse indice após excluir:***\n");
         vetor[posicao].imprimeLista();
-        System.out.println("\n***N° elementos no vetor antes da exclusão:" + num_elementos_antigo +"\n");
-        System.out.println("\n***N° elementos no vetor após exclusão:" + vetor[posicao].tamanho_lista +"\n");
+        System.out.println("\n***N° elementos no indice antes da exclusão:" + num_elementos_antigo +"\n");
+        System.out.println("\n***N° elementos no indice após exclusão:" + vetor[posicao].tamanho_lista +"\n");
     }
 
     public void buscaPalavra(String nome, int tamanho) { //função responsável por encontrar na tabela hash (vetor de listas encadeadas) um item, dado que eu passo sua chave como parametro (nome)
