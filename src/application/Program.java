@@ -10,7 +10,7 @@ import entites.Vetor;
 public class Program { 
 	public static void main(String[] args) {
 
-			System.out.println("------ Opções do menu ------ \n 1 - Pressione 1 para abrir/carregar o arquivo \n 0 - Sair");
+		System.out.println("------ Opções do menu ------ \n 1 - Pressione 1 para abrir/carregar o arquivo \n 0 - Sair");
 		int opcao = Integer.parseInt(JOptionPane.showInputDialog("Digite uma opção válida: "));
 
 		while (opcao != 1){
